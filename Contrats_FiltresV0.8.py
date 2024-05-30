@@ -71,14 +71,14 @@ df_pivoted.columns = pivot_columns
 df_pivoted['Contract Name'] = df_pivoted['EPG source'] + '...' + df_pivoted['EPG destination'] + '_Ct'
 
 # Ajouter la colonne "Subjects"
-df_pivoted['Subjects'] = df_pivoted['Contract Name'].astype(str).str.replace('_Ct', '_Sbj')
+df_pivoted['AppProfile'] = df_pivoted['Contract Name'].astype(str).str.replace('_Ct', '_Sbj')
 
 # Réorganiser pour inclure 'Subjects' entre 'Contract Name' et 'EPG source'
-cols_pivot = ['Tenant', 'Contract Name', 'Subjects', 'EPG source', 'EPG destination'] + [col for col in df_pivoted.columns if col not in ['Tenant', 'Contract Name', 'Subjects', 'EPG source', 'EPG destination']]
+cols_pivot = ['Tenant', 'Contract Name', 'AppProfile', 'EPG source', 'EPG destination'] + [col for col in df_pivoted.columns if col not in ['Tenant', 'Contract Name', 'AppProfile', 'EPG source', 'EPG destination']]
 df_pivoted = df_pivoted[cols_pivot]
 
 # Extraire les données pour l'onglet 'Contrat_EPGs'
-df_contract_epgs = df_pivoted[['Tenant', 'Contract Name', 'Subjects', 'EPG source', 'EPG destination']]
+df_contract_epgs = df_pivoted[['Tenant', 'Contract Name', 'AppProfile', 'EPG source', 'EPG destination']]
 
 # Extraire les données pour l'onglet 'ContratToFilters'
 df_contrat_to_filters = df_pivoted.drop(columns=['EPG source', 'EPG destination'])
