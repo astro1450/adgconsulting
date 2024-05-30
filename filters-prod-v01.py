@@ -23,16 +23,9 @@ for row in sheet.iter_rows(min_row=2, values_only=True):
    
     if current_tenant != tenant_name:
         current_tenant = tenant_name
-        data["apic"]["tenants"].append({"name": tenant_name, "filters": []})
+        data["apic"]["tenants"].append({"name": tenant_name, "filters": []}
 
-    if current_filter != filter_name:
-        current_filter = filter_name
-        data["apic"]["tenants"][-1]["filters"].append({"name": filter_name,"entries": []})
-    
-    if dst_to_port != None :  
-        data["apic"]["tenants"][-1]["filters"][-1]["entries"].append({"name": entry_name, "ethertype": ethertype, "protocol":protocole, "destination_from_port":dst_from_port, "destination_to_port":dst_to_port, "stateful": stateful})
-    else:
-         data["apic"]["tenants"][-1]["filters"][-1]["entries"].append({"name": entry_name, "ethertype": ethertype, "protocol":protocole, "destination_from_port":dst_from_port, "stateful": stateful})
+    data["apic"]["tenants"][-1]["filters"][-1]["entries"].append({"name": entry_name, "ethertype": ethertype, "protocol":protocole, "destination_from_port":dst_from_port, "stateful": stateful})
 
 # Write the data to a YAML file
 with open("filters.yaml", "w") as yaml_file:
