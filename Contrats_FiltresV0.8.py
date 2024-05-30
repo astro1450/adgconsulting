@@ -27,7 +27,7 @@ def extract_filter_details(filter_name):
 
     return details
 
-# Chargement du fichier Excel
+# Chargement du fichier Excel A MODIFIER
 df = pd.read_excel('/Users/astro14/SynologyDrive/1.ADG Consulting/2.Clients/TV5 monde/Intégration/ContratFiltres/script/vrf_excel_file.xlsx')
 
 # Suppression des lignes en doublon
@@ -90,8 +90,8 @@ df_contract_epgs = df_contract_epgs[cols_contract_epgs]
 # Extraire les données pour l'onglet 'ContratToFilters'
 df_contrat_to_filters = df_pivoted.drop(columns=['EPG source', 'EPG destination'])
 
-# Enregistrer le DataFrame dans un nouveau fichier Excel
-output_path = 'ListeContratEtFiltresAPP.xlsx'
+# Enregistrer le DataFrame dans un nouveau fichier Excel A MODIFIER
+output_path = 'ListeContratEtFiltresMultiOnglets.xlsx'
 with pd.ExcelWriter(output_path, engine='xlsxwriter') as writer:
     df_pivoted.to_excel(writer, sheet_name='Contracts_Filters_EPGs', index=False)
     unique_filters_detailed.to_excel(writer, sheet_name='Unique_Filters', index=False)
