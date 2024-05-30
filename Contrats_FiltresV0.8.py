@@ -11,11 +11,8 @@ def extract_filter_details(filter_name):
     elif 'UDP' in filter_name:
         details['Protocol'] = 'UDP'
     
-    
     # Extraction des plages de ports
     ports = filter_name.split('_')[0]
-
-
     port_parts = re.split(r'\s*-\s*|\s*\u2026\s*', ports)
 
     if len(port_parts) == 2:
@@ -79,6 +76,12 @@ df_pivoted = df_pivoted[cols_pivot]
 
 # Extraire les données pour l'onglet 'Contrat_EPGs'
 df_contract_epgs = df_pivoted[['Tenant', 'Contract Name', 'Subject', 'EPG source', 'EPG destination']]
+
+# Ajouter la colonne 'AppProfile'
+df_contract_epgs['AppProfile'] = df_contract_epgs['Tenant'].map({
+    'XDA_ADM_TN': 'APP_ADM',
+    'XDA_DATA_TN': 'APP_DATA'
+})
 
 # Extraire les données pour l'onglet 'ContratToFilters'
 df_contrat_to_filters = df_pivoted.drop(columns=['EPG source', 'EPG destination'])
