@@ -75,13 +75,17 @@ cols_pivot = ['Tenant', 'Contract Name', 'Subject', 'EPG source', 'EPG destinati
 df_pivoted = df_pivoted[cols_pivot]
 
 # Extraire les données pour l'onglet 'Contrat_EPGs'
-df_contract_epgs = df_pivoted[['Tenant', 'Contract Name', 'Subject', 'EPG source', 'EPG destination']]
+df_contract_epgs = df_pivoted[['Tenant', 'Contract Name', 'EPG source', 'EPG destination']]
 
 # Ajouter la colonne 'AppProfile'
 df_contract_epgs['AppProfile'] = df_contract_epgs['Tenant'].map({
     'XDA_ADM_TN': 'APP_ADM',
     'XDA_DATA_TN': 'APP_DATA'
 })
+
+# Réorganiser les colonnes pour mettre 'AppProfile' à la place de 'Subject'
+cols_contract_epgs = ['Tenant', 'Contract Name', 'AppProfile', 'EPG source', 'EPG destination']
+df_contract_epgs = df_contract_epgs[cols_contract_epgs]
 
 # Extraire les données pour l'onglet 'ContratToFilters'
 df_contrat_to_filters = df_pivoted.drop(columns=['EPG source', 'EPG destination'])
