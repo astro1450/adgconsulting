@@ -28,7 +28,7 @@ def extract_filter_details(filter_name):
     return details
 
 # Chargement du fichier Excel
-df = pd.read_excel('vrf_excel_file.xlsx')
+df = pd.read_excel('/Users/astro14/SynologyDrive/1.ADG Consulting/2.Clients/TV5 monde/Intégration/ContratFiltres/script/vrf_excel_file.xlsx')
 
 # Suppression des lignes en doublon
 df.drop_duplicates(inplace=True)
@@ -75,10 +75,10 @@ cols_pivot = ['Tenant', 'Contract Name', 'Subject', 'EPG source', 'EPG destinati
 df_pivoted = df_pivoted[cols_pivot]
 
 # Extraire les données pour l'onglet 'Contrat_EPGs'
-df_contract_epgs = df_pivoted[['Tenant', 'Contract Name', 'EPG source', 'EPG destination']]
+df_contract_epgs = df_pivoted[['Tenant', 'Contract Name', 'EPG source', 'EPG destination']].copy()
 
-# Ajouter la colonne 'AppProfile'
-df_contract_epgs['AppProfile'] = df_contract_epgs['Tenant'].map({
+# Ajouter la colonne 'AppProfile' en utilisant .loc pour éviter SettingWithCopyWarning
+df_contract_epgs.loc[:, 'AppProfile'] = df_contract_epgs['Tenant'].map({
     'XDA_ADM_TN': 'APP_ADM',
     'XDA_DATA_TN': 'APP_DATA'
 })
@@ -91,7 +91,7 @@ df_contract_epgs = df_contract_epgs[cols_contract_epgs]
 df_contrat_to_filters = df_pivoted.drop(columns=['EPG source', 'EPG destination'])
 
 # Enregistrer le DataFrame dans un nouveau fichier Excel
-output_path = 'ListeContratEtFiltresV15.xlsx'
+output_path = 'ListeContratEtFiltresAPP.xlsx'
 with pd.ExcelWriter(output_path, engine='xlsxwriter') as writer:
     df_pivoted.to_excel(writer, sheet_name='Contracts_Filters_EPGs', index=False)
     unique_filters_detailed.to_excel(writer, sheet_name='Unique_Filters', index=False)
