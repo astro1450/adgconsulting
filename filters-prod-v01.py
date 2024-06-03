@@ -29,7 +29,7 @@ for row in sheet.iter_rows(min_row=2, values_only=True):
         current_filter = filter_name
         data["apic"]["tenants"][-1]["filters"].append({"name": filter_name,"entries": []})
     
-    data["apic"]["tenants"][-1]["filters"][-1]["entries"].append({"name": entry_name, "ethertype": ethertype, "protocol":protocole, "destination_from_port":dst_from_port, "destination_to_port":dst_to_port, "stateful": stateful})
+    data["apic"]["tenants"][-1]["filters"][-1]["entries"].append({"name": entry_name, "ethertype": ethertype, "protocol":protocole, "destination_from_port": int(dst_from_port), "destination_to_port": int(dst_to_port), "stateful": str(stateful)})
     x=0
 # Write the data to a YAML file
 with open("filters.yaml", "w") as yaml_file:
