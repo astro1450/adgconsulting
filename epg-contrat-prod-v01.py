@@ -15,7 +15,7 @@ data = {"apic": {"tenants": []}}
 current_tenant = None
 for row in sheet.iter_rows(min_row=2, values_only=True):
     # Extract values from the row
-    tenant_name, app_profile_name, contract_name, epg_source, epg_destination = row
+    tenant_name, contract_name, app_profile_name, contract_name, epg_source, epg_destination = row
     print(epg_destination)
     if current_tenant != tenant_name:
         current_tenant = tenant_name
