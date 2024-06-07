@@ -84,6 +84,66 @@ columns_to_delete = ["C", "J", "K"]
 delete_columns(rows_deleted_file, columns_to_delete,columns_deleted_file)
 
 
+
+import openpyxl
+
+def find_and_replace1(file_path, sheet_name, column_let, old_value1, old_value2, new_value):
+    # Load the workbook and select the specified sheet
+    workbook = openpyxl.load_workbook(file_path)
+    sheet = workbook[sheet_name]
+    
+    # Iterate over all the rows and columns in the sheet
+    for cell in sheet[column_let]:
+        if cell.value and not isinstance(cell.value, int):
+            if cell.value and old_value1 in cell.value :
+                cell.value = cell.value.replace(old_value1, new_value)
+            elif cell.value and old_value2 in cell.value :
+                cell.value = cell.value.replace(old_value2, new_value)
+            elif  cell.value and "Type" in cell.value :
+                cell.value = "ICMP"
+
+    # Save the workbook
+    workbook.save(file_path)
+
+# Usage
+file_path = columns_deleted_file # Replace with the path to your Excel file
+sheet_name = 'Matrice de flux'       # Replace with the name of your sheet
+old_value1 = 'XDA_USERS_VRF'     # Replace with the value you want to find
+old_value2 = 'XDA_USERS'
+new_value = 'XDA_DATA_VRF'     # Replace with the value you want to replace with
+column_let= 'E'
+find_and_replace1(file_path, sheet_name, column_let, old_value1, old_value2, new_value)
+def find_and_replace2(file_path, sheet_name, column_let, old_value1, new_value):
+    # Load the workbook and select the specified sheet
+    workbook = openpyxl.load_workbook(file_path)
+    sheet = workbook[sheet_name]
+    
+    # Iterate over all the rows and columns in the sheet
+    for cell in sheet[column_let]:
+        if cell.value and not isinstance(cell.value, int):
+            if cell.value and old_value1 in cell.value :
+                cell.value = new_value
+
+    # Save the workbook
+    workbook.save(file_path)
+
+# Usage
+file_path = columns_deleted_file # Replace with the path to your Excel file
+sheet_name = 'Matrice de flux'       # Replace with the name of your sheet
+
+
+find_and_replace2(file_path, sheet_name, 'F', '_VLAN', 'ExternalEPG_Borders')
+
+
+
+
+
+
+
+
+
+
+
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 from openpyxl.formula.translate import Translator
